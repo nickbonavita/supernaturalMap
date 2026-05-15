@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Supernatural Season 1 US Episode Map</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: Arial, sans-serif;
+      }
+
+      body {
+        margin: 0;
+        background: #f5f6f8;
+        color: #1b1f24;
+      }
+
+      main {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 1.5rem;
+      }
+
+      h1 {
+        margin: 0 0 0.5rem;
+        font-size: 1.7rem;
+      }
+
+      p {
+        margin: 0 0 1rem;
+      }
+
+      #map {
+        height: 75vh;
+        min-height: 520px;
+        border: 1px solid #d0d7de;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .leaflet-tooltip {
+        max-width: 280px;
+        line-height: 1.35;
+      }
+
+      .tooltip-title {
+        font-weight: 700;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Supernatural Season 1 Episode Locations</h1>
+      <p>
+        Hover or tab to a point to see the episode number, name, summary, and where it takes
+        place in the U.S.
+      </p>
+      <div id="map" aria-label="Map of the United States with episode locations"></div>
+    </main>
+
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script>
+      const episodes = [
+        {
+          episode: 1,
+          name: "Pilot",
+          description: "Sam rejoins Dean after their father disappears and a vengeful woman in white kills on lonely roads.",
+          location: "Lawrence, Kansas",
+          lat: 38.9717,
+          lon: -95.2353,
+        },
+        {
+          episode: 2,
+          name: "Wendigo",
+          description: "The brothers investigate campers disappearing in the Colorado wilderness.",
+          location: "Blackwater Ridge, Colorado",
+          lat: 39.113,
+          lon: -106.4454,
+        },
+        {
+          episode: 3,
+          name: "Dead in the Water",
+          description: "A spirit in a Wisconsin lake starts drowning people connected to a decades-old cover-up.",
+          location: "Lake Manitoc, Wisconsin",
+          lat: 44.0886,
+          lon: -87.6576,
+        },
+        {
+          episode: 4,
+          name: "Phantom Traveler",
+          description: "A demon causes deadly plane crashes as Sam confronts his fear of flying.",
+          location: "Flight route from Oklahoma City, Oklahoma",
+          lat: 35.4676,
+          lon: -97.5164,
+        },
+        {
+          episode: 5,
+          name: "Bloody Mary",
+          description: "A mirror spirit punishes teens in Ohio for secrets tied to guilt.",
+          location: "Toledo, Ohio",
+          lat: 41.6528,
+          lon: -83.5379,
+        },
+        {
+          episode: 6,
+          name: "Skin",
+          description: "A shapeshifter frames Dean for murder while stalking people close to Sam.",
+          location: "St. Louis, Missouri",
+          lat: 38.627,
+          lon: -90.1994,
+        },
+        {
+          episode: 7,
+          name: "Hook Man",
+          description: "A hook-handed spirit attacks in a small college town after acts deemed sinful.",
+          location: "Ankeny, Iowa",
+          lat: 41.7318,
+          lon: -93.6001,
+        },
+        {
+          episode: 8,
+          name: "Bugs",
+          description: "A cursed housing development unleashes swarms of deadly insects.",
+          location: "Oasis Plains, Oklahoma",
+          lat: 35.2226,
+          lon: -97.4395,
+        },
+        {
+          episode: 9,
+          name: "Home",
+          description: "Sam and Dean return home to stop a violent poltergeist in their old house.",
+          location: "Lawrence, Kansas",
+          lat: 38.9717,
+          lon: -95.2353,
+        },
+        {
+          episode: 10,
+          name: "Asylum",
+          description: "The brothers investigate murders linked to a haunted abandoned asylum.",
+          location: "Rockford, Illinois",
+          lat: 42.2711,
+          lon: -89.0937,
+        },
+        {
+          episode: 11,
+          name: "Scarecrow",
+          description: "A pagan god demands ritual sacrifices in an isolated farming town.",
+          location: "Burkittsville, Indiana",
+          lat: 39.7684,
+          lon: -86.1581,
+        },
+        {
+          episode: 12,
+          name: "Faith",
+          description: "Dean seeks miraculous healing at a faith center where reapers are manipulated.",
+          location: "Glenwood Springs, Colorado",
+          lat: 39.5505,
+          lon: -107.3248,
+        },
+        {
+          episode: 13,
+          name: "Route 666",
+          description: "A vengeful ghost truck terrorizes a Missouri town with a history of racist violence.",
+          location: "Cape Girardeau, Missouri",
+          lat: 37.3059,
+          lon: -89.5181,
+        },
+        {
+          episode: 14,
+          name: "Nightmare",
+          description: "Sam's visions lead to a family tragedy driven by psychic abilities.",
+          location: "Saginaw, Michigan",
+          lat: 43.4195,
+          lon: -83.9508,
+        },
+        {
+          episode: 15,
+          name: "The Benders",
+          description: "The brothers confront a human family of hunters who prey on people.",
+          location: "Hibbing, Minnesota",
+          lat: 47.4272,
+          lon: -92.9377,
+        },
+        {
+          episode: 16,
+          name: "Shadow",
+          description: "Meg manipulates the brothers while deadly shadow spirits hunt hunters.",
+          location: "Chicago, Illinois",
+          lat: 41.8781,
+          lon: -87.6298,
+        },
+        {
+          episode: 17,
+          name: "Hell House",
+          description: "A fake haunting becomes real after online folklore gives a tulpa power.",
+          location: "Richardson, Texas",
+          lat: 32.9483,
+          lon: -96.7299,
+        },
+        {
+          episode: 18,
+          name: "Something Wicked",
+          description: "A shtriga feeds on children, reopening one of Dean's oldest failures.",
+          location: "Fitchburg, Wisconsin",
+          lat: 43.002,
+          lon: -89.4245,
+        },
+        {
+          episode: 19,
+          name: "Provenance",
+          description: "A deadly painting spirit follows new owners from house to house.",
+          location: "New Paltz, New York",
+          lat: 41.7476,
+          lon: -74.0868,
+        },
+        {
+          episode: 20,
+          name: "Dead Man's Blood",
+          description: "The brothers team up with a veteran hunter to ambush a vampire nest.",
+          location: "Manning, Colorado",
+          lat: 39.7392,
+          lon: -104.9903,
+        },
+        {
+          episode: 21,
+          name: "Salvation",
+          description: "Sam and Dean race to save their family as demonic plans converge.",
+          location: "Salvation, Iowa",
+          lat: 41.5868,
+          lon: -93.625,
+        },
+        {
+          episode: 22,
+          name: "Devil's Trap",
+          description: "A final confrontation with the yellow-eyed demon leaves the Winchester family shattered.",
+          location: "Salvation, Iowa",
+          lat: 41.5868,
+          lon: -93.625,
+        },
+      ];
+
+      const map = L.map("map", {
+        minZoom: 3,
+        maxZoom: 8,
+      }).setView([39.8283, -98.5795], 4);
+
+      map.setMaxBounds([
+        [24.396308, -125.0],
+        [49.384358, -66.93457],
+      ]);
+
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 8,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      }).addTo(map);
+
+      const coordinateOccurrences = new Map();
+      // 1.75 radians rotates each duplicate around the prior one; 0.18° lat/lon keeps points distinct at U.S. zoom levels.
+      const overlapAngleIncrement = 1.75;
+      const overlapOffsetDistance = 0.18;
+      for (const entry of episodes) {
+        const key = `${entry.lat},${entry.lon}`;
+        const occurrenceCount = coordinateOccurrences.get(key) || 0;
+        coordinateOccurrences.set(key, occurrenceCount + 1);
+
+        // Offset repeated coordinates in a spiral-like pattern so stacked episodes are visible.
+        const angle = occurrenceCount * overlapAngleIncrement;
+        const offset = overlapOffsetDistance * occurrenceCount;
+        const markerLat = entry.lat + Math.sin(angle) * offset;
+        const markerLon = entry.lon + Math.cos(angle) * offset;
+
+        const marker = L.circleMarker([markerLat, markerLon], {
+          radius: 6,
+          color: "#ffffff",
+          weight: 1,
+          fillColor: "#6f42c1",
+          fillOpacity: 0.95,
+        })
+          .bindTooltip(
+            `<div class="tooltip-title">Episode ${entry.episode}: ${entry.name}</div>
+             <div><strong>Location:</strong> ${entry.location}</div>
+             <div>${entry.description}</div>`,
+            {
+              direction: "top",
+              sticky: true,
+              opacity: 0.98,
+            }
+          );
+
+        marker.on("add", () => {
+          const markerElement = marker.getElement();
+          if (!markerElement) {
+            // Defensive guard: element can be missing if the layer has not fully rendered yet.
+            return;
+          }
+
+          markerElement.setAttribute("tabindex", "0");
+          markerElement.setAttribute("role", "button");
+          markerElement.setAttribute("aria-label", `Episode ${entry.episode}: ${entry.name}`);
+          markerElement.addEventListener("focus", () => marker.openTooltip());
+          markerElement.addEventListener("blur", () => marker.closeTooltip());
+        });
+
+        marker.addTo(map);
+      }
+    </script>
+  </body>
+</html>
