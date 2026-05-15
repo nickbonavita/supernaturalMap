@@ -59,8 +59,8 @@
     <main>
       <h1>Supernatural Season 1 Episode Locations</h1>
       <p>
-        Hover a point to see the episode number, name, summary, and where it takes place in the
-        U.S.
+        Hover or tab to a point to see the episode number, name, summary, and where it takes
+        place in the U.S.
       </p>
       <div id="map" aria-label="Map of the United States with episode locations"></div>
     </main>
@@ -265,14 +265,16 @@
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       }).addTo(map);
 
-      const duplicates = new Map();
+      const coordinateOccurrences = new Map();
+      const OVERLAP_ANGLE_MULTIPLIER = 1.75;
+      const OVERLAP_OFFSET_DISTANCE = 0.18;
       for (const entry of episodes) {
         const key = `${entry.lat},${entry.lon}`;
-        const seen = duplicates.get(key) || 0;
-        duplicates.set(key, seen + 1);
+        const seen = coordinateOccurrences.get(key) || 0;
+        coordinateOccurrences.set(key, seen + 1);
 
-        const angle = seen * 1.75;
-        const offset = 0.18 * seen;
+        const angle = seen * OVERLAP_ANGLE_MULTIPLIER;
+        const offset = OVERLAP_OFFSET_DISTANCE * seen;
         const markerLat = entry.lat + Math.sin(angle) * offset;
         const markerLon = entry.lon + Math.cos(angle) * offset;
 
