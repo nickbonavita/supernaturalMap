@@ -266,7 +266,7 @@
       }).addTo(map);
 
       const coordinateOccurrences = new Map();
-      // Tune duplicate-marker spread: larger angle rotates points faster, larger distance pushes overlaps farther apart.
+      // 1.75 radians rotates each duplicate around the prior one; 0.18° lat/lon keeps points distinct at U.S. zoom levels.
       const overlapAngleIncrement = 1.75;
       const overlapOffsetDistance = 0.18;
       for (const entry of episodes) {
@@ -301,6 +301,7 @@
         marker.on("add", () => {
           const markerElement = marker.getElement();
           if (!markerElement) {
+            // Defensive guard: element can be missing if the layer has not fully rendered yet.
             return;
           }
 
