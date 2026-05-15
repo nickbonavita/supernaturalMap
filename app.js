@@ -3,6 +3,7 @@ let episodes = [];
 const searchInput = document.getElementById("searchInput");
 const typeFilter = document.getElementById("typeFilter");
 const seasonFilter = document.getElementById("seasonFilter");
+const episodeFilter = document.getElementById("episodeFilter");
 const threatFilter = document.getElementById("threatFilter");
 const resetFilters = document.getElementById("resetFilters");
 const resultCount = document.getElementById("resultCount");
@@ -36,12 +37,14 @@ initializeApp();
 searchInput.addEventListener("input", render);
 typeFilter.addEventListener("change", render);
 seasonFilter.addEventListener("change", render);
+episodeFilter.addEventListener("change", render);
 threatFilter.addEventListener("change", render);
 
 resetFilters.addEventListener("click", () => {
   searchInput.value = "";
   typeFilter.value = "all";
   seasonFilter.value = "all";
+  episodeFilter.value = "all";
   threatFilter.value = "all";
   activeId = null;
   render();
@@ -68,10 +71,15 @@ async function initializeApp() {
 function initializeFilters() {
   typeFilter.length = 1;
   seasonFilter.length = 1;
+  episodeFilter.length = 1;
   populateSelect(typeFilter, uniqueValues("creature"));
   populateSelect(
     seasonFilter,
     uniqueValues("season").map((season) => `Season ${season}`)
+  );
+  populateSelect(
+    episodeFilter,
+    uniqueValues("episode").map((episodeNumber) => `Episode ${episodeNumber}`)
   );
 }
 
@@ -114,15 +122,29 @@ function filterEpisodes() {
   const query = searchInput.value.trim().toLowerCase();
   const selectedCreature = typeFilter.value;
   const selectedSeason = seasonFilter.value;
+  const selectedEpisode = episodeFilter.value;
   const selectedThreat = threatFilter.value;
+  const parsedEpisodeCode = parseEpisodeCodeQuery(query);
 
   return episodes.filter((entry) => {
     const matchCreature = selectedCreature === "all" || entry.creature === selectedCreature;
     const matchSeason = selectedSeason === "all" || `Season ${entry.season}` === selectedSeason;
+    const matchEpisode =
+      selectedEpisode === "all" || `Episode ${entry.episode}` === selectedEpisode;
     const matchThreat = selectedThreat === "all" || entry.threat === selectedThreat;
-    const text = `${entry.title} ${entry.location} ${entry.creature} ${entry.note}`.toLowerCase();
-    const matchQuery = query.length === 0 || text.includes(query);
-    return matchCreature && matchSeason && matchThreat && matchQuery;
+    const code = episodeCode(entry).toLowerCase();
+    const text = `${code} ${entry.title} ${entry.location} ${entry.creature} ${entry.note}`.toLowerCase();
+    const matchTextQuery = query.length === 0 || text.includes(query);
+    const matchParsedCode =
+      !parsedEpisodeCode ||
+      (entry.season === parsedEpisodeCode.season && entry.episode === parsedEpisodeCode.episode);
+    return (
+      matchCreature &&
+      matchSeason &&
+      matchEpisode &&
+      matchThreat &&
+      (matchTextQuery || matchParsedCode)
+    );
   });
 }
 
@@ -144,10 +166,9 @@ function renderList(entries) {
   entries.forEach((entry) => {
     const node = sightingTemplate.content.cloneNode(true);
     const button = node.querySelector(".sighting-button");
+    button.dataset.episodeId = entry.id;
 
-    node.querySelector(
-      ".sighting-title"
-    ).textContent = `S${String(entry.season).padStart(2, "0")}E${String(entry.episode).padStart(2, "0")} - ${entry.title}`;
+    node.querySelector(".sighting-title").textContent = `${episodeCode(entry)} - ${entry.title}`;
     node.querySelector(
       ".sighting-meta"
     ).innerHTML = `${entry.location} | ${entry.creature} | <span class="threat threat-${entry.threat}">${capitalize(
@@ -160,13 +181,7 @@ function renderList(entries) {
     }
 
     button.addEventListener("click", () => {
-      activeId = entry.id;
-      render();
-      const marker = markerById.get(entry.id);
-      if (marker) {
-        map.flyTo(marker.getLatLng(), 7, { duration: 0.8 });
-        marker.openPopup();
-      }
+      focusEpisode(entry.id);
     });
 
     fragment.append(node);
@@ -192,14 +207,13 @@ function renderMarkers(entries) {
       fillColor: threatColors[entry.threat] || "#4b4b4b",
       fillOpacity: 0.95,
     }).bindPopup(
-      `<strong>S${String(entry.season).padStart(2, "0")}E${String(entry.episode).padStart(2, "0")} - ${entry.title}</strong><br/>${
+      `<strong>${episodeCode(entry)} - ${entry.title}</strong><br/>${
         entry.location
       }<br/>${entry.creature}<br/>Threat: ${capitalize(entry.threat)}<br/><em>${entry.note}</em>`
     );
 
     marker.on("click", () => {
-      activeId = entry.id;
-      render();
+      focusEpisode(entry.id, true);
     });
 
     marker.addTo(markerLayer);
@@ -244,4 +258,47 @@ function buildDisplayCoordinates(entries) {
 
 function capitalize(value) {
   return value.charAt(0).toUpperCase() + value.slice(1);
+}
+
+function parseEpisodeCodeQuery(query) {
+  if (!query) {
+    return null;
+  }
+
+  const compact = query.replace(/\s+/g, "");
+  const match = compact.match(/s?(\d{1,2})e(\d{1,2})/i) || compact.match(/(\d{1,2})x(\d{1,2})/i);
+  if (!match) {
+    return null;
+  }
+
+  return {
+    season: Number(match[1]),
+    episode: Number(match[2]),
+  };
+}
+
+function episodeCode(entry) {
+  return `S${String(entry.season).padStart(2, "0")}E${String(entry.episode).padStart(2, "0")}`;
+}
+
+function focusEpisode(episodeId, fromMarkerClick = false) {
+  activeId = episodeId;
+  render();
+
+  const marker = markerById.get(episodeId);
+  if (marker) {
+    map.flyTo(marker.getLatLng(), 7, { duration: 0.8 });
+    marker.openPopup();
+  }
+
+  if (fromMarkerClick) {
+    scrollActiveListItemIntoView();
+  }
+}
+
+function scrollActiveListItemIntoView() {
+  const activeButton = sightingList.querySelector(".sighting-button.active");
+  if (activeButton) {
+    activeButton.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
 }

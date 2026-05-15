@@ -33,7 +33,12 @@
         <h2>Hunter Filters</h2>
         <label class="input-block">
           <span>Search</span>
-          <input id="searchInput" type="search" placeholder="Episode, town, creature, or case..." />
+          <input
+            id="searchInput"
+            type="search"
+            placeholder="Episode, town, creature, case, or code (S07E12)..."
+          />
+          <small class="input-hint">Tip: type an episode code like S05E08 to jump directly.</small>
         </label>
 
         <label class="input-block">
@@ -47,6 +52,13 @@
           <span>Season</span>
           <select id="seasonFilter">
             <option value="all">All Seasons</option>
+          </select>
+        </label>
+
+        <label class="input-block">
+          <span>Episode #</span>
+          <select id="episodeFilter">
+            <option value="all">All Episode Numbers</option>
           </select>
         </label>
 
