@@ -33,6 +33,7 @@ let activeId = null;
 
 resultCount.textContent = "Loading episode data...";
 initializeApp();
+window.addEventListener("pageshow", resetUiToDefaultState);
 
 searchInput.addEventListener("input", render);
 typeFilter.addEventListener("change", render);
@@ -53,13 +54,15 @@ resetFilters.addEventListener("click", () => {
 
 async function initializeApp() {
   try {
-    const response = await fetch("episodes.json", { cache: "no-store" });
+    const cacheBust = `v=${Date.now()}`;
+    const response = await fetch(`episodes.json?${cacheBust}`, { cache: "no-store" });
     if (!response.ok) {
       throw new Error(`Failed to load episodes (${response.status})`);
     }
 
     episodes = await response.json();
     initializeFilters();
+    resetUiToDefaultState();
     render();
   } catch (error) {
     console.error(error);
@@ -115,7 +118,7 @@ function render() {
     map.fitBounds(L.latLngBounds(markerPoints).pad(0.18), { maxZoom: 6 });
   }
 
-  resultCount.textContent = `${filtered.length} episode cases found.`;
+  resultCount.textContent = `Showing ${filtered.length} of ${episodes.length} episodes.`;
 }
 
 function filterEpisodes() {
@@ -301,4 +304,13 @@ function scrollActiveListItemIntoView() {
   if (activeButton) {
     activeButton.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
+}
+
+function resetUiToDefaultState() {
+  searchInput.value = "";
+  typeFilter.value = "all";
+  seasonFilter.value = "all";
+  episodeFilter.value = "all";
+  threatFilter.value = "all";
+  activeId = null;
 }
