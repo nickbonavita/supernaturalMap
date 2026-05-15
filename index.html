@@ -267,16 +267,16 @@
 
       const coordinateOccurrences = new Map();
       // Tune duplicate-marker spread: larger angle rotates points faster, larger distance pushes overlaps farther apart.
-      const OVERLAP_ANGLE_INCREMENT = 1.75;
-      const OVERLAP_OFFSET_DISTANCE = 0.18;
+      const overlapAngleIncrement = 1.75;
+      const overlapOffsetDistance = 0.18;
       for (const entry of episodes) {
         const key = `${entry.lat},${entry.lon}`;
-        const occurrenceIndex = coordinateOccurrences.get(key) || 0;
-        coordinateOccurrences.set(key, occurrenceIndex + 1);
+        const occurrenceCount = coordinateOccurrences.get(key) || 0;
+        coordinateOccurrences.set(key, occurrenceCount + 1);
 
         // Offset repeated coordinates in a spiral-like pattern so stacked episodes are visible.
-        const angle = occurrenceIndex * OVERLAP_ANGLE_INCREMENT;
-        const offset = OVERLAP_OFFSET_DISTANCE * occurrenceIndex;
+        const angle = occurrenceCount * overlapAngleIncrement;
+        const offset = overlapOffsetDistance * occurrenceCount;
         const markerLat = entry.lat + Math.sin(angle) * offset;
         const markerLon = entry.lon + Math.cos(angle) * offset;
 
