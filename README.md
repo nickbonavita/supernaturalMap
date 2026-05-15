@@ -9,8 +9,9 @@ An interactive map inspired by the TV show Supernatural, with episode cases and 
 - Filters for creature type, season, and threat level
 - Episode list with season/episode tags and case notes
 - Responsive layout for desktop and mobile
+- Full-series coverage: all 327 episodes across Seasons 1-15
 
-The map currently includes entries spanning all 15 seasons, and you can isolate any season with the Season filter.
+The map includes all 327 episodes spanning all 15 seasons, and you can isolate any season with the Season filter.
 
 ## Run It
 
@@ -50,4 +51,5 @@ Deployment notes:
 - `index.html` - app shell and layout
 - `styles.css` - visual theme and responsive design
 - `app.js` - map logic, filters, and rendering
+- `episodes.json` - full episode dataset used by the app
 - `.github/workflows/deploy-pages.yml` - GitHub Pages deployment pipeline
