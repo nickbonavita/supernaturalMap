@@ -266,26 +266,26 @@
       }).addTo(map);
 
       const coordinateOccurrences = new Map();
-      const OVERLAP_ANGLE_MULTIPLIER = 1.75;
+      const OVERLAP_ANGLE_INCREMENT = 1.75;
       const OVERLAP_OFFSET_DISTANCE = 0.18;
       for (const entry of episodes) {
         const key = `${entry.lat},${entry.lon}`;
         const seen = coordinateOccurrences.get(key) || 0;
         coordinateOccurrences.set(key, seen + 1);
 
-        const angle = seen * OVERLAP_ANGLE_MULTIPLIER;
+        // Offset repeated coordinates in a spiral-like pattern so stacked episodes are visible.
+        const angle = seen * OVERLAP_ANGLE_INCREMENT;
         const offset = OVERLAP_OFFSET_DISTANCE * seen;
         const markerLat = entry.lat + Math.sin(angle) * offset;
         const markerLon = entry.lon + Math.cos(angle) * offset;
 
-        L.circleMarker([markerLat, markerLon], {
+        const marker = L.circleMarker([markerLat, markerLon], {
           radius: 6,
           color: "#ffffff",
           weight: 1,
           fillColor: "#6f42c1",
           fillOpacity: 0.95,
         })
-          .addTo(map)
           .bindTooltip(
             `<div class="tooltip-title">Episode ${entry.episode}: ${entry.name}</div>
              <div><strong>Location:</strong> ${entry.location}</div>
@@ -296,6 +296,21 @@
               opacity: 0.98,
             }
           );
+
+        marker.on("add", () => {
+          const markerPath = marker.getElement();
+          if (!markerPath) {
+            return;
+          }
+
+          markerPath.setAttribute("tabindex", "0");
+          markerPath.setAttribute("role", "button");
+          markerPath.setAttribute("aria-label", `Episode ${entry.episode}: ${entry.name}`);
+          markerPath.addEventListener("focus", () => marker.openTooltip());
+          markerPath.addEventListener("blur", () => marker.closeTooltip());
+        });
+
+        marker.addTo(map);
       }
     </script>
   </body>
