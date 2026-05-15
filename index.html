@@ -266,7 +266,7 @@
       }).addTo(map);
 
       const coordinateOccurrences = new Map();
-      // Tune duplicate-marker spread: angular step in radians and distance step in lat/lon degrees.
+      // Tune duplicate-marker spread: larger angle rotates points faster, larger distance pushes overlaps farther apart.
       const OVERLAP_ANGLE_INCREMENT = 1.75;
       const OVERLAP_OFFSET_DISTANCE = 0.18;
       for (const entry of episodes) {
@@ -299,16 +299,16 @@
           );
 
         marker.on("add", () => {
-          const markerPath = marker.getElement();
-          if (!markerPath) {
+          const markerElement = marker.getElement();
+          if (!markerElement) {
             return;
           }
 
-          markerPath.setAttribute("tabindex", "0");
-          markerPath.setAttribute("role", "button");
-          markerPath.setAttribute("aria-label", `Episode ${entry.episode}: ${entry.name}`);
-          markerPath.addEventListener("focus", () => marker.openTooltip());
-          markerPath.addEventListener("blur", () => marker.closeTooltip());
+          markerElement.setAttribute("tabindex", "0");
+          markerElement.setAttribute("role", "button");
+          markerElement.setAttribute("aria-label", `Episode ${entry.episode}: ${entry.name}`);
+          markerElement.addEventListener("focus", () => marker.openTooltip());
+          markerElement.addEventListener("blur", () => marker.closeTooltip());
         });
 
         marker.addTo(map);
