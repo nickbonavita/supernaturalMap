@@ -387,9 +387,11 @@ function renderList(entries) {
 function renderMarkers(entries) {
   markerLayer.clearLayers();
   markerById.clear();
+  const displayCoordinates = buildDisplayCoordinates(entries);
 
   entries.forEach((entry) => {
-    const marker = L.marker([entry.lat, entry.lng], {
+    const markerLatLng = displayCoordinates.get(entry.id) || [entry.lat, entry.lng];
+    const marker = L.marker(markerLatLng, {
       icon: L.divIcon({
         className: "",
         html: `<div class="marker marker-${entry.threat}" title="${entry.title}"></div>`,
@@ -410,6 +412,40 @@ function renderMarkers(entries) {
     marker.addTo(markerLayer);
     markerById.set(entry.id, marker);
   });
+}
+
+function buildDisplayCoordinates(entries) {
+  const groupedByCoordinate = new Map();
+  const displayCoordinates = new Map();
+
+  entries.forEach((entry) => {
+    const key = `${entry.lat.toFixed(6)},${entry.lng.toFixed(6)}`;
+    if (!groupedByCoordinate.has(key)) {
+      groupedByCoordinate.set(key, []);
+    }
+    groupedByCoordinate.get(key).push(entry);
+  });
+
+  groupedByCoordinate.forEach((group) => {
+    if (group.length === 1) {
+      const onlyEntry = group[0];
+      displayCoordinates.set(onlyEntry.id, [onlyEntry.lat, onlyEntry.lng]);
+      return;
+    }
+
+    // Spread markers in a small ring so duplicate coordinates remain visible and clickable.
+    const radius = 0.16;
+    const sortedGroup = [...group].sort((a, b) => a.id.localeCompare(b.id));
+
+    sortedGroup.forEach((entry, index) => {
+      const angle = (2 * Math.PI * index) / sortedGroup.length;
+      const lat = entry.lat + radius * Math.sin(angle);
+      const lng = entry.lng + radius * Math.cos(angle);
+      displayCoordinates.set(entry.id, [lat, lng]);
+    });
+  });
+
+  return displayCoordinates;
 }
 
 function capitalize(value) {
