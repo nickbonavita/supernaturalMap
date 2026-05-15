@@ -1,0 +1,281 @@
+:root {
+  --bg-1: #f9f4e8;
+  --bg-2: #eedfbf;
+  --panel: rgba(255, 250, 235, 0.88);
+  --ink: #2a241a;
+  --muted: #6e6252;
+  --accent: #0f6e5a;
+  --accent-2: #a14024;
+  --border: rgba(42, 36, 26, 0.18);
+  --shadow: 0 12px 30px rgba(83, 63, 31, 0.15);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Manrope", sans-serif;
+  color: var(--ink);
+  background: radial-gradient(circle at 15% 20%, #fff6dc 0%, transparent 28%),
+    radial-gradient(circle at 85% 10%, #f5d8b2 0%, transparent 32%),
+    linear-gradient(140deg, var(--bg-1), var(--bg-2));
+  overflow-x: hidden;
+}
+
+.ambient-glow {
+  position: fixed;
+  inset: auto -120px -140px auto;
+  width: 340px;
+  height: 340px;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, rgba(15, 110, 90, 0.2), rgba(15, 110, 90, 0));
+  pointer-events: none;
+}
+
+.topbar {
+  padding: 1.4rem clamp(1rem, 3vw, 2.5rem);
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 1rem;
+}
+
+.eyebrow {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--accent);
+  font-size: 0.73rem;
+}
+
+h1,
+h2 {
+  margin: 0;
+  font-family: "Cinzel", serif;
+}
+
+h1 {
+  font-size: clamp(1.7rem, 3.8vw, 2.7rem);
+  letter-spacing: 0.03em;
+}
+
+h2 {
+  font-size: 1.15rem;
+  margin-bottom: 1rem;
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--muted);
+  max-width: 39ch;
+  text-align: right;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 300px 1fr 350px;
+  gap: 1rem;
+  padding: 0 clamp(1rem, 3vw, 2.5rem) 1.5rem;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(4px);
+  animation: rise 500ms ease both;
+}
+
+.controls,
+.details {
+  padding: 1rem;
+}
+
+.map-panel {
+  padding: 0.55rem;
+}
+
+#map {
+  width: 100%;
+  min-height: 70vh;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.input-block {
+  display: grid;
+  gap: 0.45rem;
+  margin-bottom: 0.85rem;
+}
+
+.input-block span {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+input,
+select,
+.reset-btn {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.62rem 0.75rem;
+  font: inherit;
+  color: var(--ink);
+  background: #fffdf8;
+}
+
+input:focus,
+select:focus {
+  outline: 2px solid rgba(15, 110, 90, 0.35);
+  border-color: var(--accent);
+}
+
+.reset-btn {
+  margin-top: 0.2rem;
+  width: 100%;
+  background: linear-gradient(135deg, var(--accent), #0c9a73);
+  color: #fff;
+  border-color: transparent;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.reset-btn:hover {
+  filter: brightness(1.06);
+}
+
+.result-count {
+  margin: 0 0 0.85rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.sighting-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.6rem;
+  max-height: 62vh;
+  overflow: auto;
+}
+
+.sighting-button {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  width: 100%;
+  text-align: left;
+  padding: 0.72rem;
+  background: #fffcf1;
+  cursor: pointer;
+  display: grid;
+  gap: 0.28rem;
+}
+
+.sighting-button:hover,
+.sighting-button.active {
+  border-color: var(--accent);
+  background: #f7f5de;
+}
+
+.sighting-title {
+  font-weight: 700;
+}
+
+.sighting-meta {
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.sighting-note {
+  color: #403626;
+  font-size: 0.9rem;
+}
+
+.threat {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-weight: 700;
+}
+
+.threat::before {
+  content: "";
+  display: inline-block;
+  width: 0.62rem;
+  height: 0.62rem;
+  border-radius: 50%;
+}
+
+.threat-low::before {
+  background: #38976d;
+}
+
+.threat-medium::before {
+  background: #b88f22;
+}
+
+.threat-high::before {
+  background: #c55e26;
+}
+
+.threat-severe::before {
+  background: #8f2316;
+}
+
+.marker {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.22);
+}
+
+.marker-low {
+  background: #38976d;
+}
+
+.marker-medium {
+  background: #b88f22;
+}
+
+.marker-high {
+  background: #c55e26;
+}
+
+.marker-severe {
+  background: #8f2316;
+}
+
+@keyframes rise {
+  from {
+    transform: translateY(8px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 1150px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .subtitle {
+    text-align: left;
+  }
+
+  #map {
+    min-height: 55vh;
+  }
+
+  .sighting-list {
+    max-height: 40vh;
+  }
+}
