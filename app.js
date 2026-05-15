@@ -317,7 +317,12 @@ function render() {
   }
 
   renderList(filtered);
-  renderMarkers(filtered);
+  const markerPoints = renderMarkers(filtered);
+
+  if (markerPoints.length > 0 && !activeId) {
+    map.fitBounds(L.latLngBounds(markerPoints).pad(0.18), { maxZoom: 6 });
+  }
+
   resultCount.textContent = `${filtered.length} episode cases found.`;
 }
 
@@ -388,16 +393,24 @@ function renderMarkers(entries) {
   markerLayer.clearLayers();
   markerById.clear();
   const displayCoordinates = buildDisplayCoordinates(entries);
+  const markerPoints = [];
+  const threatColors = {
+    low: "#38976d",
+    medium: "#b88f22",
+    high: "#c55e26",
+    severe: "#8f2316",
+  };
 
   entries.forEach((entry) => {
     const markerLatLng = displayCoordinates.get(entry.id) || [entry.lat, entry.lng];
-    const marker = L.marker(markerLatLng, {
-      icon: L.divIcon({
-        className: "",
-        html: `<div class="marker marker-${entry.threat}" title="${entry.title}"></div>`,
-        iconSize: [18, 18],
-        iconAnchor: [9, 9],
-      }),
+    markerPoints.push(markerLatLng);
+
+    const marker = L.circleMarker(markerLatLng, {
+      radius: 8,
+      color: "#ffffff",
+      weight: 2,
+      fillColor: threatColors[entry.threat] || "#4b4b4b",
+      fillOpacity: 0.95,
     }).bindPopup(
       `<strong>S${String(entry.season).padStart(2, "0")}E${String(entry.episode).padStart(2, "0")} - ${entry.title}</strong><br/>${
         entry.location
@@ -412,6 +425,8 @@ function renderMarkers(entries) {
     marker.addTo(markerLayer);
     markerById.set(entry.id, marker);
   });
+
+  return markerPoints;
 }
 
 function buildDisplayCoordinates(entries) {
