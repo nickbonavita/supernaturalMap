@@ -22,31 +22,31 @@
     <div class="ambient-glow"></div>
     <header class="topbar">
       <div>
-        <p class="eyebrow">Field Archive 07</p>
+        <p class="eyebrow">Winchester Case Files</p>
         <h1>Supernatural Map</h1>
       </div>
-      <p class="subtitle">Track legends, anomalies, and unstable zones in real time.</p>
+      <p class="subtitle">Track episodes, hunt locations, and creatures from the TV series.</p>
     </header>
 
     <main class="layout">
       <section class="panel controls">
-        <h2>Scan Controls</h2>
+        <h2>Hunter Filters</h2>
         <label class="input-block">
           <span>Search</span>
-          <input id="searchInput" type="search" placeholder="Name, region, or lore..." />
+          <input id="searchInput" type="search" placeholder="Episode, town, creature, or case..." />
         </label>
 
         <label class="input-block">
-          <span>Type</span>
+          <span>Creature Type</span>
           <select id="typeFilter">
-            <option value="all">All Entities</option>
+            <option value="all">All Creatures</option>
           </select>
         </label>
 
         <label class="input-block">
-          <span>Era</span>
-          <select id="eraFilter">
-            <option value="all">All Eras</option>
+          <span>Season</span>
+          <select id="seasonFilter">
+            <option value="all">All Seasons</option>
           </select>
         </label>
 
@@ -61,15 +61,15 @@
           </select>
         </label>
 
-        <button id="resetFilters" class="reset-btn" type="button">Reset Scan</button>
+        <button id="resetFilters" class="reset-btn" type="button">Reset Filters</button>
       </section>
 
       <section class="panel map-panel">
-        <div id="map" aria-label="Supernatural sightings map"></div>
+        <div id="map" aria-label="Supernatural episode locations map"></div>
       </section>
 
       <section class="panel details">
-        <h2>Active Sightings</h2>
+        <h2>Episode Cases</h2>
         <p id="resultCount" class="result-count"></p>
         <ul id="sightingList" class="sighting-list"></ul>
       </section>

@@ -1,14 +1,16 @@
 # Supernatural Map
 
-An interactive map of folklore sightings, haunted landmarks, and anomalous zones.
+An interactive map inspired by the TV show Supernatural, with episode cases and hunt locations.
 
 ## Features
 
 - Interactive map with custom markers
 - Search by name, location, or notes
-- Filters for type, era, and threat level
-- Detail panel with lore snippets and status tags
+- Filters for creature type, season, and threat level
+- Episode list with season/episode tags and case notes
 - Responsive layout for desktop and mobile
+
+The map currently includes entries spanning all 15 seasons, and you can isolate any season with the Season filter.
 
 ## Run It
 

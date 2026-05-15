@@ -1,141 +1,249 @@
-const sightings = [
+const episodes = [
   {
-    id: "s01",
-    name: "Lantern Bride",
-    type: "Ghost",
-    era: "Victorian",
-    threat: "medium",
-    location: "Whitby, England",
-    lat: 54.4863,
-    lng: -0.6133,
-    note: "Appears near cliff paths after sea fog rolls in.",
-  },
-  {
-    id: "s02",
-    name: "Howling Chapel",
-    type: "Cursed Site",
-    era: "Medieval",
+    id: "s01e01",
+    season: 1,
+    episode: 1,
+    title: "Pilot",
+    creature: "Woman in White",
     threat: "high",
-    location: "Prague, Czechia",
-    lat: 50.0755,
-    lng: 14.4378,
-    note: "Choir voices reported from a sealed crypt with no access points.",
+    location: "Lawrence, Kansas",
+    lat: 38.9717,
+    lng: -95.2353,
+    note: "Sam rejoins Dean when a case mirrors their mother’s death.",
   },
   {
-    id: "s03",
-    name: "Riverbone Wisp",
-    type: "Spirit",
-    era: "Ancient",
-    threat: "low",
-    location: "Kyoto, Japan",
-    lat: 35.0116,
-    lng: 135.7681,
-    note: "Blue lights drift low above flood banks before disappearing at dawn.",
+    id: "s02e01",
+    season: 2,
+    episode: 1,
+    title: "In My Time of Dying",
+    creature: "Reaper",
+    threat: "high",
+    location: "Sioux Falls, South Dakota",
+    lat: 43.5446,
+    lng: -96.7311,
+    note: "Dean hovers near death while a reaper stalks the hospital.",
   },
   {
-    id: "s04",
-    name: "Ashfield Doppelganger",
-    type: "Entity",
-    era: "Modern",
+    id: "s03e01",
+    season: 3,
+    episode: 1,
+    title: "The Magnificent Seven",
+    creature: "Seven Deadly Sins Demons",
     threat: "severe",
-    location: "Toronto, Canada",
-    lat: 43.6532,
-    lng: -79.3832,
-    note: "Witnesses claim to see their own reflection moving independently.",
+    location: "Lincoln, Nebraska",
+    lat: 40.8136,
+    lng: -96.7026,
+    note: "Seven demons escape Hell’s Gate and spread chaos across town.",
   },
   {
-    id: "s05",
-    name: "Silent Bell Tower",
-    type: "Haunting",
-    era: "Renaissance",
-    threat: "medium",
-    location: "Florence, Italy",
-    lat: 43.7696,
-    lng: 11.2558,
-    note: "Bells vibrate with no audible ring and trigger memory loss episodes.",
-  },
-  {
-    id: "s06",
-    name: "Sandstep Revenant",
-    type: "Ghost",
-    era: "Colonial",
-    threat: "high",
-    location: "Lisbon, Portugal",
-    lat: 38.7223,
-    lng: -9.1393,
-    note: "Footprints appear ahead of travelers and never behind.",
-  },
-  {
-    id: "s07",
-    name: "Mirewatch Choir",
-    type: "Spirit",
-    era: "Ancient",
-    threat: "medium",
-    location: "Novi Sad, Serbia",
-    lat: 45.2671,
-    lng: 19.8335,
-    note: "Layered harmonics detected over wetlands with no visible source.",
-  },
-  {
-    id: "s08",
-    name: "Glass Orchard",
-    type: "Anomaly",
-    era: "Modern",
-    threat: "high",
-    location: "Seoul, South Korea",
-    lat: 37.5665,
-    lng: 126.978,
-    note: "Tree bark calcifies overnight and shatters on contact.",
-  },
-  {
-    id: "s09",
-    name: "Marrow Tunnel",
-    type: "Cursed Site",
-    era: "Industrial",
+    id: "s04e01",
+    season: 4,
+    episode: 1,
+    title: "Lazarus Rising",
+    creature: "Angels and Demons",
     threat: "severe",
-    location: "Chicago, USA",
-    lat: 41.8781,
-    lng: -87.6298,
-    note: "Repeated reports of missing time and mirrored architecture.",
+    location: "Pittsburgh, Pennsylvania",
+    lat: 40.4406,
+    lng: -79.9959,
+    note: "Dean returns from Hell and Castiel enters the hunt.",
   },
   {
-    id: "s10",
-    name: "Eel Crown",
-    type: "Entity",
-    era: "Ancient",
-    threat: "high",
-    location: "Cork, Ireland",
-    lat: 51.8985,
-    lng: -8.4756,
-    note: "Luminous shape circles old harbor walls during storms.",
+    id: "s05e01",
+    season: 5,
+    episode: 1,
+    title: "Sympathy for the Devil",
+    creature: "Lucifer",
+    threat: "severe",
+    location: "Detroit, Michigan",
+    lat: 42.3314,
+    lng: -83.0458,
+    note: "Lucifer is free, escalating the apocalypse-level hunt.",
   },
   {
-    id: "s11",
-    name: "Whisper Tram",
-    type: "Haunting",
-    era: "Modern",
-    threat: "low",
-    location: "Melbourne, Australia",
-    lat: -37.8136,
-    lng: 144.9631,
-    note: "An extra tram appears on route maps but never on schedules.",
-  },
-  {
-    id: "s12",
-    name: "Lantern Fen",
-    type: "Spirit",
-    era: "Medieval",
+    id: "s06e01",
+    season: 6,
+    episode: 1,
+    title: "Exile on Main St.",
+    creature: "Djinn",
     threat: "medium",
-    location: "York, England",
-    lat: 53.959,
-    lng: -1.0815,
-    note: "Pilgrims recorded phantom processions before dawn.",
+    location: "Lawrence, Kansas",
+    lat: 38.9717,
+    lng: -95.2353,
+    note: "Dean is pulled back into hunting after a string of attacks.",
+  },
+  {
+    id: "s07e01",
+    season: 7,
+    episode: 1,
+    title: "Meet the New Boss",
+    creature: "Leviathans",
+    threat: "severe",
+    location: "Cheyenne, Wyoming",
+    lat: 41.14,
+    lng: -104.8202,
+    note: "Leviathans emerge as a dominant threat after Castiel breaks.",
+  },
+  {
+    id: "s08e01",
+    season: 8,
+    episode: 1,
+    title: "We Need to Talk About Kevin",
+    creature: "Demons",
+    threat: "high",
+    location: "Grand Junction, Colorado",
+    lat: 39.0639,
+    lng: -108.5506,
+    note: "Sam returns to hunting while Kevin deciphers the demon tablet.",
+  },
+  {
+    id: "s09e01",
+    season: 9,
+    episode: 1,
+    title: "I Think I’m Gonna Like It Here",
+    creature: "Fallen Angels",
+    threat: "high",
+    location: "Des Moines, Iowa",
+    lat: 41.5868,
+    lng: -93.625,
+    note: "The angel fall reshapes the supernatural battlefield.",
+  },
+  {
+    id: "s10e01",
+    season: 10,
+    episode: 1,
+    title: "Black",
+    creature: "Demon Dean",
+    threat: "severe",
+    location: "Atlanta, Georgia",
+    lat: 33.749,
+    lng: -84.388,
+    note: "Dean embraces the Mark’s corruption while Sam searches for a cure.",
+  },
+  {
+    id: "s11e01",
+    season: 11,
+    episode: 1,
+    title: "Out of the Darkness, Into the Fire",
+    creature: "The Darkness",
+    threat: "severe",
+    location: "Lebanon, Kansas",
+    lat: 39.8097,
+    lng: -98.5556,
+    note: "The release of Amara creates a world-level threat.",
+  },
+  {
+    id: "s12e01",
+    season: 12,
+    episode: 1,
+    title: "Keep Calm and Carry On",
+    creature: "Lady Toni / BMOL",
+    threat: "medium",
+    location: "Lawrence, Kansas",
+    lat: 38.9717,
+    lng: -95.2353,
+    note: "Mary returns as the British Men of Letters arrive in force.",
+  },
+  {
+    id: "s13e01",
+    season: 13,
+    episode: 1,
+    title: "Lost and Found",
+    creature: "Asmodeus",
+    threat: "high",
+    location: "Paterson, New Jersey",
+    lat: 40.9168,
+    lng: -74.1718,
+    note: "Jack’s emergence collides with escalating prince-of-hell politics.",
+  },
+  {
+    id: "s14e01",
+    season: 14,
+    episode: 1,
+    title: "Stranger in a Strange Land",
+    creature: "Michael (Alt)",
+    threat: "severe",
+    location: "Duluth, Minnesota",
+    lat: 46.7867,
+    lng: -92.1005,
+    note: "Michael controls Dean and builds an enhanced-monster agenda.",
+  },
+  {
+    id: "s15e01",
+    season: 15,
+    episode: 1,
+    title: "Back and to the Future",
+    creature: "Ghosts from Hell",
+    threat: "high",
+    location: "Harlan, Kansas",
+    lat: 39.3542,
+    lng: -99.1498,
+    note: "The final season opens with Hell’s souls flooding Earth.",
+  },
+  {
+    id: "s01e12",
+    season: 1,
+    episode: 12,
+    title: "Faith",
+    creature: "Reaper",
+    threat: "medium",
+    location: "Glenwood Springs, Colorado",
+    lat: 39.5505,
+    lng: -107.3248,
+    note: "A faith healer’s miracles hide a dangerous reaper pact.",
+  },
+  {
+    id: "s05e08",
+    season: 5,
+    episode: 8,
+    title: "Changing Channels",
+    creature: "Trickster / Gabriel",
+    threat: "high",
+    location: "Boulder, Colorado",
+    lat: 40.01499,
+    lng: -105.2705,
+    note: "Reality-bending TV worlds trap Sam and Dean in a warning.",
+  },
+  {
+    id: "s11e20",
+    season: 11,
+    episode: 20,
+    title: "Don’t Call Me Shurley",
+    creature: "God / Chuck",
+    threat: "severe",
+    location: "Topeka, Kansas",
+    lat: 39.0473,
+    lng: -95.6752,
+    note: "Chuck reveals himself as cosmic stakes spiral toward collapse.",
+  },
+  {
+    id: "s13e16",
+    season: 13,
+    episode: 16,
+    title: "Scoobynatural",
+    creature: "Animated Ghost",
+    threat: "low",
+    location: "Coolsville (fictional)",
+    lat: 39.7392,
+    lng: -104.9903,
+    note: "The Winchesters team with Scooby-Doo in a cursed cartoon world.",
+  },
+  {
+    id: "s15e20",
+    season: 15,
+    episode: 20,
+    title: "Carry On",
+    creature: "Vampire Nest",
+    threat: "medium",
+    location: "Akron, Ohio",
+    lat: 41.0814,
+    lng: -81.519,
+    note: "One final hunt closes out the Winchester story.",
   },
 ];
 
 const searchInput = document.getElementById("searchInput");
 const typeFilter = document.getElementById("typeFilter");
-const eraFilter = document.getElementById("eraFilter");
+const seasonFilter = document.getElementById("seasonFilter");
 const threatFilter = document.getElementById("threatFilter");
 const resetFilters = document.getElementById("resetFilters");
 const resultCount = document.getElementById("resultCount");
@@ -145,7 +253,7 @@ const sightingTemplate = document.getElementById("sightingTemplate");
 const map = L.map("map", {
   zoomControl: true,
   attributionControl: true,
-}).setView([35, 12], 2);
+}).setView([39.5, -98.35], 4);
 
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
   maxZoom: 18,
@@ -162,26 +270,34 @@ render();
 
 searchInput.addEventListener("input", render);
 typeFilter.addEventListener("change", render);
-eraFilter.addEventListener("change", render);
+seasonFilter.addEventListener("change", render);
 threatFilter.addEventListener("change", render);
 
 resetFilters.addEventListener("click", () => {
   searchInput.value = "";
   typeFilter.value = "all";
-  eraFilter.value = "all";
+  seasonFilter.value = "all";
   threatFilter.value = "all";
   activeId = null;
   render();
-  map.setView([35, 12], 2);
+  map.setView([39.5, -98.35], 4);
 });
 
 function initializeFilters() {
-  populateSelect(typeFilter, uniqueValues("type"), "All Entities");
-  populateSelect(eraFilter, uniqueValues("era"), "All Eras");
+  populateSelect(typeFilter, uniqueValues("creature"));
+  populateSelect(
+    seasonFilter,
+    uniqueValues("season").map((season) => `Season ${season}`)
+  );
 }
 
 function uniqueValues(key) {
-  return [...new Set(sightings.map((entry) => entry[key]))].sort((a, b) => a.localeCompare(b));
+  return [...new Set(episodes.map((entry) => entry[key]))].sort((a, b) => {
+    if (typeof a === "number" && typeof b === "number") {
+      return a - b;
+    }
+    return String(a).localeCompare(String(b));
+  });
 }
 
 function populateSelect(selectNode, values) {
@@ -194,7 +310,7 @@ function populateSelect(selectNode, values) {
 }
 
 function render() {
-  const filtered = filterSightings();
+  const filtered = filterEpisodes();
 
   if (activeId && !filtered.some((item) => item.id === activeId)) {
     activeId = null;
@@ -202,22 +318,22 @@ function render() {
 
   renderList(filtered);
   renderMarkers(filtered);
-  resultCount.textContent = `${filtered.length} sightings in current scan.`;
+  resultCount.textContent = `${filtered.length} episode cases found.`;
 }
 
-function filterSightings() {
+function filterEpisodes() {
   const query = searchInput.value.trim().toLowerCase();
-  const selectedType = typeFilter.value;
-  const selectedEra = eraFilter.value;
+  const selectedCreature = typeFilter.value;
+  const selectedSeason = seasonFilter.value;
   const selectedThreat = threatFilter.value;
 
-  return sightings.filter((entry) => {
-    const matchType = selectedType === "all" || entry.type === selectedType;
-    const matchEra = selectedEra === "all" || entry.era === selectedEra;
+  return episodes.filter((entry) => {
+    const matchCreature = selectedCreature === "all" || entry.creature === selectedCreature;
+    const matchSeason = selectedSeason === "all" || `Season ${entry.season}` === selectedSeason;
     const matchThreat = selectedThreat === "all" || entry.threat === selectedThreat;
-    const text = `${entry.name} ${entry.location} ${entry.note}`.toLowerCase();
+    const text = `${entry.title} ${entry.location} ${entry.creature} ${entry.note}`.toLowerCase();
     const matchQuery = query.length === 0 || text.includes(query);
-    return matchType && matchEra && matchThreat && matchQuery;
+    return matchCreature && matchSeason && matchThreat && matchQuery;
   });
 }
 
@@ -226,7 +342,7 @@ function renderList(entries) {
 
   if (entries.length === 0) {
     const empty = document.createElement("li");
-    empty.textContent = "No sightings match the current scan profile.";
+    empty.textContent = "No episodes match the current filter set.";
     empty.className = "sighting-item";
     sightingList.append(empty);
     return;
@@ -238,10 +354,12 @@ function renderList(entries) {
     const node = sightingTemplate.content.cloneNode(true);
     const button = node.querySelector(".sighting-button");
 
-    node.querySelector(".sighting-title").textContent = entry.name;
+    node.querySelector(
+      ".sighting-title"
+    ).textContent = `S${String(entry.season).padStart(2, "0")}E${String(entry.episode).padStart(2, "0")} - ${entry.title}`;
     node.querySelector(
       ".sighting-meta"
-    ).innerHTML = `${entry.location} | ${entry.type} | <span class="threat threat-${entry.threat}">${capitalize(
+    ).innerHTML = `${entry.location} | ${entry.creature} | <span class="threat threat-${entry.threat}">${capitalize(
       entry.threat
     )}</span>`;
     node.querySelector(".sighting-note").textContent = entry.note;
@@ -255,7 +373,7 @@ function renderList(entries) {
       render();
       const marker = markerById.get(entry.id);
       if (marker) {
-        map.flyTo(marker.getLatLng(), 6, { duration: 0.8 });
+        map.flyTo(marker.getLatLng(), 7, { duration: 0.8 });
         marker.openPopup();
       }
     });
@@ -274,14 +392,14 @@ function renderMarkers(entries) {
     const marker = L.marker([entry.lat, entry.lng], {
       icon: L.divIcon({
         className: "",
-        html: `<div class="marker marker-${entry.threat}" title="${entry.name}"></div>`,
+        html: `<div class="marker marker-${entry.threat}" title="${entry.title}"></div>`,
         iconSize: [18, 18],
         iconAnchor: [9, 9],
       }),
     }).bindPopup(
-      `<strong>${entry.name}</strong><br/>${entry.location}<br/>${entry.type} | ${entry.era}<br/>Threat: ${capitalize(
-        entry.threat
-      )}<br/><em>${entry.note}</em>`
+      `<strong>S${String(entry.season).padStart(2, "0")}E${String(entry.episode).padStart(2, "0")} - ${entry.title}</strong><br/>${
+        entry.location
+      }<br/>${entry.creature}<br/>Threat: ${capitalize(entry.threat)}<br/><em>${entry.note}</em>`
     );
 
     marker.on("click", () => {
